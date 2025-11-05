@@ -11,7 +11,7 @@ This project is designed to help students work with lectures
 
 
 ## Tecnology stack
-- Python (as P.L.)
-- Vosk (for voice recognising)
-- Aiogram (for work with telegram api)
-- Langchain (for work with LLM)
+- [Python](https://www.python.org/) (as P.L.)
+- [Vosk](https://github.com/alphacep/vosk/) (for voice recognising)
+- [Aiogram](https://github.com/aiogram/aiogram/) (for work with telegram api)
+- [Langchain](https://github.com/langchain-ai/langchain/) (for work with LLM)
