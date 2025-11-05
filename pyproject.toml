@@ -9,3 +9,8 @@ dependencies = [
     "langchain>=1.0.3",
     "vosk>=0.3.45",
 ]
+
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
