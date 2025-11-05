@@ -2,7 +2,6 @@
 
 This project is designed to help students work with lectures
 
----
 
 ## Using process description
 1) Record a lecture on audio;
@@ -16,5 +15,3 @@ This project is designed to help students work with lectures
 - Vosk (for voice recognising)
 - Aiogram (for work with telegram api)
 - Langchain (for work with LLM)
-
----
