@@ -11,12 +11,12 @@ class UserRegisterData(TypedDict):
 
 class UserService[User](Protocol):
     """Service for user data manipulation"""
-    async def register(self, **kwargs: Unpack[UserRegisterData]) -> None:
+    async def register(self, **kwargs: Unpack[UserRegisterData]) -> UUID:
         """
         Args:
-            :telegram_id: user id in telegram
+            :telegram_id: int   # user id in telegram
         Return:
-            :nothing: None
+            :user_id: UUID  # user id in DB
         """
         ...
     async def get(
@@ -26,8 +26,8 @@ class UserService[User](Protocol):
             ) -> User | None:
         """
         Args:
-            :id: user's id in DB
-            :telegram_id: user's id in telegram
+            :id: Optional[UUID]   # user's id in DB
+            :telegram_id: Optional[int]   # user's id in telegram
         Return:
             :user: User | None
         """
