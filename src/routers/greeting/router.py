@@ -19,6 +19,6 @@ async def first_greeting(
     await user_service.register(telegram_id=user_telegram_id)
 
 
-@greeting_router.message(StateFilter(None))
+# @greeting_router.message(StateFilter(None))
 async def main_menu(message: Message) -> None:
     await message.answer(text=messages.MAIN_MENU)
