@@ -6,9 +6,14 @@ from aiogram.enums import UpdateType
 from aiogram.fsm.storage.base import BaseStorage
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.fsm.strategy import FSMStrategy
 
 from configs.bot import BotConfig
 from configs.bot import StateStorageType
+from lib.repos.sqlmodel import SQLModelRepository
+from middlewares.services import DBServicesMiddleware
+from models.user import UserModel
+from services.user.sqlmodel import SQLModelUserService
 
 
 def state_storage() -> BaseStorage:
@@ -38,9 +43,21 @@ def bot() -> Bot:
 
 
 def dispatcher() -> Dispatcher:
-    return Dispatcher(
-        storage=None,
+    dp = Dispatcher(
+        storage=state_storage(),
+        fsm_strategy=FSMStrategy.USER_IN_CHAT,
+        disable_fsm=False,
         name="main")
+
+    dp.message.middleware.register(DBServicesMiddleware(
+        services={
+            "user_service": lambda db: SQLModelUserService(
+                user_repo=SQLModelRepository(
+                    model=UserModel,
+                    session=db)),
+        }))
+
+    return dp
 
 
 allowed_updates = [
