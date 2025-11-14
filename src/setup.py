@@ -10,10 +10,12 @@ from aiogram.fsm.strategy import FSMStrategy
 
 from configs.bot import BotConfig
 from configs.bot import StateStorageType
+from configs.stt import STTConfig
 from lib.repos.sqlmodel import SQLModelRepository
 from middlewares.services import DBServicesMiddleware
 from models.user import UserModel
 from services.user.sqlmodel import SQLModelUserService
+from services.stt.vosk import VoskSTTService
 
 
 def state_storage() -> BaseStorage:
@@ -55,6 +57,8 @@ def dispatcher() -> Dispatcher:
                 user_repo=SQLModelRepository(
                     model=UserModel,
                     session=db)),
+            "stt_service": lambda _: VoskSTTService(
+                model_path=STTConfig().model_path)
         }))
 
     return dp

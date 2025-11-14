@@ -11,7 +11,7 @@ import db
 
 
 class DBServicesMiddleware(BaseMiddleware):
-    async def __init__(
+    def __init__(
             self,
             services: dict[str, Callable[[AsyncSession], Any]],
             ) -> None:
