@@ -6,7 +6,7 @@ from aiogram.types import Message
 from aiogram.enums import ChatAction
 
 from routers import messages as common_messages
-from routers.depends import IsRegisteredFilter
+from routers.filters import IsRegisteredFilter
 from services.summarise.abc import SummariseService
 from services.stt.abc import STTService
 
@@ -49,6 +49,7 @@ async def summarise_audio(
                 "telegram_id": user_telegram_id,
                 "file_id": audio_file_id,
             })
+            assert audio is not None, "Audio should be not None"
             text_to_summarise = await stt_service.recognise(audio=audio)
             log.debug({
                 "event_id": event_id,

@@ -4,7 +4,7 @@ from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import StateFilter
 
-from routers.depends import IsRegisteredFilter
+from routers.filters import IsRegisteredFilter
 from routers.greeting import messages
 from services.user.abc import UserService
 
