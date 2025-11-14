@@ -1,11 +1,11 @@
 from typing import Optional
 from uuid import UUID
 
-from pydantic import BaseModel as BasePydanticModel
+from sqlmodel import SQLModel
 from pydantic import Field
 
 
-class BaseModel(BasePydanticModel):
+class BaseModel(SQLModel):
     ...
 
 
