@@ -20,7 +20,7 @@ def state_storage() -> BaseStorage:
             redis_config = RedisConfig()
 
             storage = RedisStorage.from_url(
-                url=redis_config.url)
+                url=redis_config.url.get_secret_value())
 
         case _:
             storage = MemoryStorage()
