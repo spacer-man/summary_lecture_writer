@@ -17,4 +17,4 @@ logs/
 
 
 # NN models
-./models/
+models/
