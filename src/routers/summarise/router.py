@@ -97,7 +97,7 @@ async def summarise_audio(
                 "message": "Successful summarised audio",
                 "telegram_id": user_telegram_id,
             })
-            await message.answer(text=summarised_text)
+            await message.reply(text=summarised_text)
     else:
         await message.answer(text=common_messages.UNKNOWN_INTERNAL_ERROR)
         log.error({
