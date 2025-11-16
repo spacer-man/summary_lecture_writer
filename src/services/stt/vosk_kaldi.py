@@ -25,7 +25,7 @@ class VoskKaldiSTTService(STTService):
     def __init__(
             self,
             model_path: str,
-            log_level: int = logging.WARNING,
+            log_level: int = -1,
             ) -> None:
         SetLogLevel(log_level)
 
