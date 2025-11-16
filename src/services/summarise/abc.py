@@ -8,6 +8,6 @@ class SummariseService(Protocol):
         Args:
             :text: str  # text for summarisation
         Return:
-            :summarised: str    # summarised text
+            :str:   # summarised text
         """
         ...

@@ -1,15 +1,17 @@
-from typing import Protocol, BinaryIO
-
-import numpy as np
+from io import BytesIO
+from typing import Protocol
 
 
 class STTService(Protocol):
     """Speech to text recognising service"""
-    async def recognise(self, audio: np.ndarray | BinaryIO) -> str:
+    async def recognise(
+            self,
+            audio: BytesIO,
+            ) -> str:
         """
         Args:
-            :audio: np.ndarray | BinaryIO  # audio for STT recognising
+            :audio: BytesIO     # audio for STT recognising
         Return:
-            :recognised: str    # recognised text
+            :str:   # recognised text
         """
         ...

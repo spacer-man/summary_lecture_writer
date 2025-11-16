@@ -2,7 +2,6 @@ import logging
 
 from aiogram import Router
 from aiogram.types import Message
-from aiogram.filters import StateFilter
 
 from routers.filters import IsRegisteredFilter
 from routers.greeting import messages
@@ -13,7 +12,7 @@ greeting_router = Router(name="greeting")
 log = logging.getLogger(__name__)
 
 
-@greeting_router.message(StateFilter(None), IsRegisteredFilter(False))
+@greeting_router.message(IsRegisteredFilter(False))
 async def first_greeting(
         message: Message,
         user_service: UserService,

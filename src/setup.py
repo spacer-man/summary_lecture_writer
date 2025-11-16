@@ -1,6 +1,7 @@
 from aiogram import Bot
 from aiogram import Dispatcher
 from aiogram.client.default import DefaultBotProperties
+from aiogram.dispatcher.middlewares.user_context import UserContextMiddleware
 from aiogram.enums import ParseMode
 from aiogram.enums import UpdateType
 from aiogram.fsm.storage.base import BaseStorage
@@ -14,8 +15,10 @@ from configs.stt import STTConfig
 from lib.repos.sqlmodel import SQLModelRepository
 from middlewares.services import DBServicesMiddleware
 from models.user import UserModel
+from routers import main_router
+from services.stt.vosk_kaldi import VoskKaldiSTTService
 from services.user.sqlmodel import SQLModelUserService
-from services.stt.vosk import VoskSTTService
+from services.summarise.test import TestSummariseService
 
 
 def state_storage() -> BaseStorage:
@@ -37,11 +40,12 @@ def state_storage() -> BaseStorage:
 
 def bot() -> Bot:
     config = BotConfig()
-    return Bot(
+    bot = Bot(
         token=config.token.get_secret_value(),
         default=DefaultBotProperties(
             parse_mode=ParseMode.MARKDOWN,
             disable_notification=False))
+    return bot
 
 
 def dispatcher() -> Dispatcher:
@@ -51,14 +55,17 @@ def dispatcher() -> Dispatcher:
         disable_fsm=False,
         name="main")
 
-    dp.message.middleware.register(DBServicesMiddleware(
+    dp.include_router(main_router)
+    dp.update.middleware.register(UserContextMiddleware())
+    dp.update.middleware.register(DBServicesMiddleware(
         services={
             "user_service": lambda db: SQLModelUserService(
                 user_repo=SQLModelRepository(
                     model=UserModel,
                     session=db)),
-            "stt_service": lambda _: VoskSTTService(
-                model_path=STTConfig().model_path)
+            "stt_service": lambda _: VoskKaldiSTTService(
+                model_path=STTConfig().model_path),
+            "summarise_service": lambda _: TestSummariseService(),
         }))
 
     return dp

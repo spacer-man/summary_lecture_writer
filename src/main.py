@@ -1,6 +1,7 @@
 import asyncio
 import logging
 
+import db
 import logs
 import setup
 
@@ -9,6 +10,7 @@ log = logging.getLogger(__name__)
 
 
 async def main():
+    await db.setup_relations()
     bot = setup.bot()
     dp = setup.dispatcher()
     try:

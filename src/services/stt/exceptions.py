@@ -1,0 +1,2 @@
+class RecognizedError(Exception):
+    pass
