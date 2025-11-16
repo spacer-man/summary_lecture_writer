@@ -9,6 +9,7 @@ from aiogram.enums import ChatAction
 from lib.audio_converter import AudioConverter
 from routers import messages as common_messages
 from routers.filters import IsRegisteredFilter
+from routers.summarise import messages
 from services.summarise.abc import SummariseService
 from services.stt.abc import STTService
 from services.stt.exceptions import RecognizedError
@@ -28,6 +29,7 @@ async def summarise_audio(
     event_id = message.message_id
 
     if message.bot:
+        await message.answer(text=messages.PROCESSING)
         await message.bot.send_chat_action(
                 chat_id=user_telegram_id,
                 action=ChatAction.TYPING)
@@ -69,14 +71,14 @@ async def summarise_audio(
             summarised_text = await summarise_service.summarise(
                 text=text_to_summarise)
         except RecognizedError as err:
-            await message.answer(text=common_messages.RECOGNIZING_ERROR)
+            await message.answer(text=messages.RECOGNIZING_ERROR)
             log.error({
                 "event_id": event_id,
                 "message": "Error at recognizing: %r",
                 "telegram_id": user_telegram_id,
             }, err, exc_info=True)
         except ValueError as err:
-            await message.answer(text=common_messages.EMPTY_RECOGNIZED_ERROR)
+            await message.answer(text=messages.EMPTY_RECOGNIZED_ERROR)
             log.error({
                 "event_id": event_id,
                 "message": "Error at recognizing: %r",

@@ -25,11 +25,11 @@ class VoskKaldiSTTService(STTService):
     def __init__(
             self,
             model_path: str,
-            log_level: int = 0,
+            log_level: int = logging.WARNING,
             ) -> None:
         SetLogLevel(log_level)
 
-        self.model = Model(model_path=model_path)
+        self.model_path = model_path
 
     async def recognise(self, audio: BytesIO) -> str:
         """
@@ -43,9 +43,10 @@ class VoskKaldiSTTService(STTService):
         audio.seek(0)
 
         try:
+            model = Model(model_path=self.model_path)
             wf = wave.open(audio, "rb")
 
-            recognizer = KaldiRecognizer(self.model, wf.getframerate())
+            recognizer = KaldiRecognizer(model, wf.getframerate())
             recognizer.SetWords(True)
             recognizer.SetPartialWords(True)
 
