@@ -16,7 +16,7 @@ from lib.repos.sqlmodel import SQLModelRepository
 from middlewares.services import DBServicesMiddleware
 from models.user import UserModel
 from routers import main_router
-from services.stt.vosk_kaldi import VoskKaldiSTTService
+from services.stt.vosk_web import VoskWebSTTService
 from services.user.sqlmodel import SQLModelUserService
 from services.summarise.test import TestSummariseService
 
@@ -63,8 +63,10 @@ def dispatcher() -> Dispatcher:
                 user_repo=SQLModelRepository(
                     model=UserModel,
                     session=db)),
-            "stt_service": lambda _: VoskKaldiSTTService(
-                model_path=STTConfig().model_path),
+#             "stt_service": lambda _: VoskKaldiSTTService(
+#                 model_path=STTConfig().model_path),
+            "stt_service": lambda _: VoskWebSTTService(
+                url=STTConfig().server_url),
             "summarise_service": lambda _: TestSummariseService(),
         }))
 
