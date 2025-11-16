@@ -58,7 +58,7 @@ class VoskWebSTTService(STTService):
                         except Exception:
                             pass
                         else:
-                            recognized_text += recognized.text
+                            recognized_text += ' ' + recognized.text
 
                     await websocket.send('{"eof" : 1}')
                     response = await websocket.recv(decode=True)
@@ -66,5 +66,5 @@ class VoskWebSTTService(STTService):
         except Exception as err:
             raise RecognizedError from err
         else:
-            recognized_text += recognized.text
+            recognized_text += ' ' + recognized.text
             return recognized_text

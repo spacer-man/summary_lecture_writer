@@ -29,16 +29,17 @@ async def summarise_audio(
     event_id = message.message_id
 
     if message.bot:
-        await message.answer(text=messages.PROCESSING)
-        await message.bot.send_chat_action(
-                chat_id=user_telegram_id,
-                action=ChatAction.TYPING)
         if message.audio:
             audio_file_id = message.audio.file_id
         elif message.voice:
             audio_file_id = message.voice.file_id
         else:
             return None
+
+        await message.answer(text=messages.PROCESSING)
+        await message.bot.send_chat_action(
+                chat_id=user_telegram_id,
+                action=ChatAction.TYPING)
 
         log.debug({
             "event_id": event_id,
