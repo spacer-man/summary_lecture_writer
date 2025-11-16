@@ -14,3 +14,7 @@ wheels/
 
 # Logs
 logs/
+
+
+# NN models
+models/
