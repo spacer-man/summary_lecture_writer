@@ -15,3 +15,21 @@ This project is designed to help students work with lectures
 - [Vosk](https://github.com/alphacep/vosk/) (for voice recognising)
 - [Aiogram](https://github.com/aiogram/aiogram/) (for work with telegram api)
 - [Langchain](https://github.com/langchain-ai/langchain/) (for work with LLM)
+
+
+## Usage
+
+I you want to use vosk server, then run this server, after it run the bot:
+```sh
+docker run --rm -d -p 2700:2700 alphacep/kaldi-ru:latest
+```
+```sh
+uv run src/main.py
+```
+
+---
+
+I you want to use vosk python api, then simply edit the setup.py and run the bot:
+```sh
+uv run src/main.py
+```
